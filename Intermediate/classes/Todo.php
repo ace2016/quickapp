@@ -88,6 +88,21 @@ class Todo
         return $resData;
     }
 
+    public function check_todo($id)
+    {
+        $resData = array();
+
+        $checked = $this->db->query("UPDATE lists SET status = 'Finished' WHERE id = '$id'");
+
+        if ($checked) {
+            $resData['status'] = 'success';
+        } else {
+            $resData['status'] = 'failed';
+        }
+
+        return $resData;
+    }
+
     // 2. Register
     // public function register( array $data )
     // {

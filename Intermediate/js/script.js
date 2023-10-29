@@ -167,6 +167,39 @@ var app = new Vue({
 				});
 		},
 
+		checkTodo(id) {
+			var fData = app.toFormData({
+				id: id,
+				action: "check_todo",
+			});
+
+			axios({
+				url: API,
+				method: "post",
+				data: fData,
+				headers: {
+					"Cache-Control": "no-cache, no-store, must-revalidate",
+					Pragma: "no-cache",
+					Expires: "0",
+				},
+			})
+				.then((resData) => {
+					if (resData.data.error == true) {
+						// window.alert(resData.data.message);
+					} else if (
+						resData.data.error == false &&
+						resData.data.status == "success"
+					) {
+						// window.alert(resData.data.message);
+						alertToast("Success", resData.data.message, "info", 3000)
+						this.getList();
+					}
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		},
+
 		//initial method - default for all form
 		toFormData: function (obj) {
 			var form_data = new FormData();

@@ -191,5 +191,33 @@ if ($action == "delete_todo"){
     echo json_encode($out);
 }
 
+if ($action == "check_todo"){
+    $id = $_POST['id'];
+
+    $check_todo = $todo->check_todo( $id );
+
+    if($check_todo) {
+        if($check_todo['status'] == 'success'){
+            $out['error'] = false;
+            $out['status'] = 'success';
+            $out['message'] = "Todo successfully completed!";
+        }
+        elseif($check_todo['status'] == 'failed'){
+            $out['error'] = true;
+            $out['message'] = "Todo not successfully completed!";
+        } 
+        else {
+            $out['error'] = true;
+            $out['message'] = "Something went wrong.";
+        }
+    } 
+    else {
+        $out['error'] = true;
+        $out['message'] = "Something went wrong: Did not receive any data!";
+    }
+
+    echo json_encode($out);
+}
+
 header("Content-type: application/json");
 die();

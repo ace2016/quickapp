@@ -52,7 +52,10 @@
                 </thead>
                 <tbody>
                     <tr v-for="(list, i) in lists" :key="list.id">
-                        <th scope="row">{{i+1}}</th>
+                        <th scope="row">
+                            <input type="checkbox" v-if="list.status=='Finished'" checked id="check" name="check" @click="checkTodo(list.id)">
+                            <input type="checkbox" v-else id="check" name="check" @click="checkTodo(list.id)">
+                        </th>
                         <td>{{list.title}}</td>
                         <td>{{list.description}}</td>
                         <td><button class="btn btn-info" @click="editList('show', list.id, list.title, list.description)">Edit</button> <button class="btn btn-danger" @click="deleteTodo(list.id)">Delete</button></td>
